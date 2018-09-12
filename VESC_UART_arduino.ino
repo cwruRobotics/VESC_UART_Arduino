@@ -1,4 +1,3 @@
-#include "VESC_uart_imp.h"
 // Visual Micro is in vMicro>General>Tutorial Mode
 // 
 /*
@@ -12,6 +11,7 @@
 
 #include "bldc_interface.h"
 #include "bldc_interface_uart.h"
+#include "VESC_uart_imp.h"
 uint8_t buf[256] = {};
 uint8_t buf_ind		= 0;
 // Define Function Prototypes that use User Types below here or use a .h file
@@ -25,8 +25,7 @@ uint8_t buf_ind		= 0;
 void setup()
 {
 	comm_uart_init();
-	Serial.begin(115200);
-	//Serial1.setTimeout(1000);
+	SERIAL_DEBUG.begin(115200);
 }
 
 // Add the main program code into the continuous loop() function
@@ -50,16 +49,11 @@ void loop()
 void serialEvent1(){
 	buf_ind = 0;
 	unsigned char b = 0; 
-	while(Serial1.available()){
+	while(SERIALIO.available()){
+		b = SERIALIO.read();
 		buf[buf_ind++] = b;
-		b = Serial1.read();
-		//Serial.println(b);
 		bldc_interface_uart_process_byte(b);
 	}
-	//Serial.println("RCVD:");
-	//for(int i = 0; i < buf_ind; i++){
-	//	Serial.print(buf[i]);
-	//}
-	//Serial.println();
+	
 	
 }

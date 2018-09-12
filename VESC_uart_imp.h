@@ -9,7 +9,9 @@
 	#include "WProgram.h"
 #endif
 
-#define UART_BAUD_RATE 115200
+#define UART_BAUD_RATE 	115200
+#define SERIALIO 		Serial1
+#define SERIAL_DEBUG 	Serial
 
 #include "datatypes.h"
 #include "bldc_interface_uart.h"

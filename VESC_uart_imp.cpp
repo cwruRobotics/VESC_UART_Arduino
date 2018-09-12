@@ -12,13 +12,13 @@
 static void send_packet(unsigned char * data, unsigned int len){
 	// UART WRITING STUFF
 	for(uint8_t i = 0; i < len; i++){
-		Serial1.write(data[i]);
+		SERIALIO.write(data[i]);
 	}
 }
 
 void comm_uart_init(void){
 	// initialize UART
-	Serial1.begin(UART_BAUD_RATE);
+	SERIALIO.begin(UART_BAUD_RATE);
 	
 	// initialize BLDC interface and provide send function
 	bldc_interface_uart_init(send_packet);
@@ -27,8 +27,11 @@ void comm_uart_init(void){
 }
 
 void bldc_val_received(mc_values * val){
-	Serial.print("Duty Cycle: "); Serial.println(val->duty_now);
-	Serial.print("Fault Code: ");Serial.println(val->fault_code);
-	Serial.print("RPM: ");Serial.println(val->rpm);
-	Serial.print("Battery Voltage: ");Serial.println(val->v_in);
+	SERIAL_DEBUG.print("Battery Voltage\t: ");	SERIAL_DEBUG.println(val->v_in);
+	SERIAL_DEBUG.print("Battery Current\t: "); 	SERIAL_DEBUG.println(val->current_in);
+	SERIAL_DEBUG.print("Motor Current\t: "); 	SERIAL_DEBUG.println(val->current_motor);
+	SERIAL_DEBUG.print("Duty Cycle\t: "); 		SERIAL_DEBUG.println(val->duty_now);
+	SERIAL_DEBUG.print("RPM\t\t: ");			SERIAL_DEBUG.println(val->rpm);
+	SERIAL_DEBUG.print("Tachometer\t: "); 		SERIAL_DEBUG.println(val->tachometer);
+	SERIAL_DEBUG.print("Fault Code \t: ");		SERIAL_DEBUG.println(val->fault_code);
 }
