@@ -1,0 +1,8 @@
+bldc_uart/
+__vm/
+.vs/
+Debug/
+Release/
+*.componentinfo.*
+*.atsln
+*.cppproj
